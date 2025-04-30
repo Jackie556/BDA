@@ -1,0 +1,42 @@
+# app.py
+from flask import Flask, url_for
+
+# Initializing the Flask application
+app = Flask(__name__)
+
+# Defining a route for the root endpoint
+@app.route('/')
+def hello_world():
+    # Use Flask's `url_for` to generate the URL for the static image
+    image_url = url_for('static', filename='photo.jpeg')
+    
+    # Read the content of the first text file
+    try:
+        with open('D:/1st year 2nd semester/Big data Analysis/python-docker-project/src/static/requirements.txt', 'r') as file1:
+            text_content1 = file1.read()
+    except FileNotFoundError:
+        text_content1 = "Text file 1 not found."
+    
+    # Read the content of the second text file
+    try:
+        with open('D:/1st year 2nd semester/Big data Analysis/python-docker-project/src/static/pythoncode.txt', 'r') as file2:
+            text_content2 = file2.read()
+    except FileNotFoundError:
+        text_content2 = "Text file 2 not found."
+
+    return f'''
+        <html>
+            <body>
+                <h1>Hello, Jackie!</h1>
+                <img src="{image_url}" alt="Photo" style="width: 300px; height: auto;">
+                <h2>Content of Text File 1:</h2>
+                <pre>{text_content1}</pre>
+                <h2>Content of Text File 2:</h2>
+                <pre>{text_content2}</pre>
+            </body>
+        </html>
+    '''
+
+# The Flask app runs on all available network interfaces
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
